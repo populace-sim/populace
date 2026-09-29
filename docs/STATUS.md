@@ -7,7 +7,16 @@ before anything is built on it.
 
 ## Now
 
-**Ready for launch day.** The LLM helpdesk ran live on the PC against the
+**Published privately, ready to go public** (29 September). This repository,
+`populace-sim/populace`, was created fresh with the whole tree as one commit
+(`94ca428`); the build history is kept in a private archive. It is
+**private**; the owner flips it public right before posting:
+`gh repo edit populace-sim/populace --visibility public --accept-visibility-change-consequences`.
+CI passed on the new repository, and the README renders as intended on
+GitHub (checked through GitHub's own renderer: headings, both tables, the
+quotes, every relative link resolving to a file).
+
+The LLM helpdesk ran live on the PC against the
 rule-based baseline, same town, seed, schedule and server
 ([results/pc-llm-helpdesk.md](results/pc-llm-helpdesk.md), merged 29
 September). The README and both launch drafts now lead with the comparison,
@@ -29,9 +38,17 @@ model call (the old parser reproduces the PC's lines exactly, so the method is
 faithful). One false flag is left: "65 resident" in the rule-based retelling,
 where "65 resident contacts" uses "resident" as an adjective.
 
-**The PC's commits** still carry the old work email (`6bc4412`). In the PC
-checkout, once: `git config user.email 314319750+shragi-presspay@users.noreply.github.com`.
-The clean publish drops that history anyway.
+**The PC needs a fresh clone**: its checkout's history is not this
+repository's, so `git pull` there will refuse (unrelated histories). Keep
+`towns\` from the old checkout if its runs are wanted, then:
+
+```powershell
+git clone https://github.com/populace-sim/populace.git populace
+cd populace
+git config user.email 314319750+shragi-presspay@users.noreply.github.com
+py -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+```
 
 **Step 6 is written and stopped short of going public.** The project is now
 **Populace**: GitHub repo, Python package, CLI command and docs. The launch
@@ -131,22 +148,13 @@ computed sections only.
 ## The name
 
 **Populace**, from step 6 (owner's decision). It was **worldsim** from step 1
-to step 5. The repository has moved twice: `shragi-presspay/worldsim`, renamed
-`shragi-presspay/populace`, then transferred to the owner's organisation as
-**`populace-sim/populace`** (private). GitHub redirects the old URLs, but a
-checkout should point at the new one. Historical records keep the old name as
-written: `docs/results/*.md` and the sample reports.
-The Mac checkout is still at `~/worldsim` (a folder name only; its remote
-points at `populace-sim/populace`).
-
-**The PC's one-line remote update**, in its checkout:
-
-```powershell
-git remote set-url origin https://github.com/populace-sim/populace.git
-```
-
-Then `git pull` and `.venv\Scripts\python.exe -m pip install -e ".[dev]"`,
-after which the command is `populace` (`.venv\Scripts\populace.exe`).
+to step 5. **`populace-sim/populace`** is a fresh repository holding the
+project as one commit, made on 29 September; the earlier repository and its
+build history are a private archive, and the old `shragi-presspay/...` URLs
+no longer lead here. Historical records keep the old name as written:
+`docs/results/*.md` and the sample reports. The Mac checkout is still at
+`~/worldsim` (a folder name only); its `origin` is this repository. The PC
+re-clones (see "Now").
 
 ## Pre-launch checks
 
