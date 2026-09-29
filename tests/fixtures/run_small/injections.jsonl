@@ -1,0 +1,5 @@
+{"affected": [], "day": 1, "id": "i80368dc200", "kind": "service.register", "params": {"channels": ["text", "call"], "handles": ["internet"], "id": "northline", "name": "Northline Internet", "purpose": "home internet"}, "tick": 12}
+{"affected": ["r001", "r002", "r003", "r004", "r005", "r006", "r007", "r008", "r009", "r010", "r011", "r012"], "day": 1, "id": "iea2110ef57", "kind": "event.outage", "params": {"neighbourhood": "the_new_estate", "service": "internet", "until": "Day 1 20:00"}, "tick": 14}
+{"affected": ["cafe"], "day": 1, "id": "i54215bd581", "kind": "place.close", "params": {"days": 2, "place": "cafe", "reason": "a burst pipe"}, "tick": 18}
+{"affected": ["bar"], "day": 1, "id": "idf79260dbd", "kind": "event.notice", "params": {"place": "bar", "text": "Quiz night, Friday"}, "tick": 24}
+{"affected": ["r001", "r002", "r003", "r004", "r005", "r006", "r007", "r008", "r009", "r010", "r011", "r012"], "day": 1, "id": "iea2110ef57-end", "kind": "_restore", "params": {"inj": "iea2110ef57", "service": "internet"}, "tick": 40}

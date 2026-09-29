@@ -1,0 +1,194 @@
+{
+ "town_names": [
+  "Ashford Vale",
+  "Brookhaven",
+  "Cedar Falls",
+  "Dunmore",
+  "Elmstead",
+  "Fairbridge",
+  "Glenwood",
+  "Hartwell",
+  "Ivybridge",
+  "Kingsmere",
+  "Larkfield",
+  "Millbrook",
+  "Northgate",
+  "Oakridge",
+  "Pinecrest",
+  "Quarry Hill",
+  "Redbrook",
+  "Stonebury",
+  "Thornton Heath",
+  "Upton Green",
+  "Westfield",
+  "Willowdale"
+ ],
+ "street_stems": [
+  "Elm",
+  "Oak",
+  "Maple",
+  "Birch",
+  "Cedar",
+  "Willow",
+  "Ash",
+  "Chestnut",
+  "Ridge",
+  "Mill",
+  "Station",
+  "Church",
+  "Park",
+  "Hill",
+  "Lake",
+  "River",
+  "Orchard",
+  "Meadow",
+  "Spring",
+  "Bridge",
+  "Kings",
+  "Queens",
+  "Victoria",
+  "Albert",
+  "Garden",
+  "Grove",
+  "Brook",
+  "Forest",
+  "Highfield",
+  "Sunnyside",
+  "Valley",
+  "Beacon",
+  "Clover",
+  "Harbour"
+ ],
+ "street_suffixes": [
+  "Street",
+  "Road",
+  "Avenue",
+  "Lane",
+  "Drive",
+  "Way",
+  "Close",
+  "Crescent",
+  "Terrace",
+  "Place"
+ ],
+ "neighbourhood_names": [
+  "the north side",
+  "the south end",
+  "the old town",
+  "the east estate",
+  "the west end",
+  "the hill",
+  "the riverside",
+  "the new estate"
+ ],
+ "commuter_jobs": [
+  {
+   "title": "nurse at the city hospital",
+   "wage_per_tick": 11.0,
+   "shift": [
+    14,
+    34
+   ],
+   "uniform": "in scrubs"
+  },
+  {
+   "title": "office worker in the city",
+   "wage_per_tick": 9.0,
+   "shift": [
+    16,
+    36
+   ],
+   "uniform": ""
+  },
+  {
+   "title": "bus driver",
+   "wage_per_tick": 8.5,
+   "shift": [
+    12,
+    30
+   ],
+   "uniform": "in a transit uniform"
+  },
+  {
+   "title": "electrician",
+   "wage_per_tick": 11.0,
+   "shift": [
+    14,
+    32
+   ],
+   "uniform": "in work boots"
+  },
+  {
+   "title": "care worker",
+   "wage_per_tick": 6.5,
+   "shift": [
+    14,
+    32
+   ],
+   "uniform": "in a care-agency tunic"
+  },
+  {
+   "title": "security guard",
+   "wage_per_tick": 7.0,
+   "shift": [
+    36,
+    48
+   ],
+   "uniform": "in a security jacket"
+  },
+  {
+   "title": "IT support technician",
+   "wage_per_tick": 10.0,
+   "shift": [
+    16,
+    35
+   ],
+   "uniform": ""
+  },
+  {
+   "title": "retail assistant at the city mall",
+   "wage_per_tick": 6.0,
+   "shift": [
+    18,
+    36
+   ],
+   "uniform": ""
+  },
+  {
+   "title": "builder",
+   "wage_per_tick": 9.0,
+   "shift": [
+    13,
+    31
+   ],
+   "uniform": "in dusty work clothes"
+  },
+  {
+   "title": "university administrator",
+   "wage_per_tick": 9.5,
+   "shift": [
+    16,
+    35
+   ],
+   "uniform": ""
+  },
+  {
+   "title": "courier",
+   "wage_per_tick": 7.0,
+   "shift": [
+    14,
+    34
+   ],
+   "uniform": ""
+  },
+  {
+   "title": "hospital porter",
+   "wage_per_tick": 7.0,
+   "shift": [
+    28,
+    46
+   ],
+   "uniform": "in a porter's tunic"
+  }
+ ]
+}

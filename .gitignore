@@ -1,0 +1,23 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# secrets
+.env
+
+# towns and runs are output, not source. Fixtures under tests/ are committed.
+/towns/
+/runs/
+
+# model weights never live in the repo; `populace model pull` puts them in ~/.populace/
+*.safetensors
+*.gguf
+
+# macOS
+.DS_Store

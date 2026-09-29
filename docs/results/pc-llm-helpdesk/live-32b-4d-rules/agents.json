@@ -1,0 +1,6 @@
+{
+  "northline": {
+    "agent": "populace.demos.isp.NorthlineSupport",
+    "kind": "rule-based baseline, no model"
+  }
+}

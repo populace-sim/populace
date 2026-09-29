@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "populace"
+version = "0.0.1"
+description = "Spin up a town of AI people from a sentence, run it headless, drop something in, and read what happened."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Shragi Ritholtz" }]
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.50",
+    "huggingface_hub>=0.25",
+]
+
+[project.optional-dependencies]
+mac = ["mlx-lm>=0.31"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+populace = "populace.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["populace*"]
+
+[tool.setuptools.package-data]
+populace = ["data/*.json", "data/names/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

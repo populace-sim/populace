@@ -1,0 +1,14 @@
+{"injections": [
+  {"kind": "service.register", "at": "now",
+   "params": {"id": "northline", "name": "Northline Internet", "purpose": "home internet and phone line",
+              "channels": ["text", "call"], "hours": {"open": "08:00", "close": "20:00"},
+              "handles": ["internet"]}},
+  {"kind": "event.outage", "at": "Day 1 07:00",
+   "params": {"service": "internet", "street": "Station Crescent", "until": "Day 2 10:00"}},
+  {"kind": "place.close", "at": "Day 1 09:00",
+   "params": {"place": "diner", "days": 2, "reason": "a burst pipe in the kitchen"}},
+  {"kind": "event.notice", "at": "Day 1 12:00",
+   "params": {"place": "grocery", "text": "Quiz night at the bar, Friday, eight o'clock"}},
+  {"kind": "event.notice", "at": "Day 1 12:00",
+   "params": {"place": "grocery", "text": "Everyone knows the quiz is rigged"}}
+]}

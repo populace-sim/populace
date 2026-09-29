@@ -1,0 +1,76 @@
+{
+  "town": "Hartwell",
+  "residents": 200,
+  "preset": "laptop",
+  "low_fidelity": false,
+  "profile": "compact",
+  "mock": false,
+  "model": [
+    "Qwen3-32B-Q4_K_M.gguf"
+  ],
+  "from": "Day 1 06:00",
+  "ticks": 192,
+  "wall_s": 2426.4,
+  "ticks_per_min": 4.75,
+  "minutes_per_day": 10.11,
+  "seconds_per_day": 606.6,
+  "tick_wall_s": {
+    "median": 10.64,
+    "p90": 17.11
+  },
+  "budget_per_tick": 6,
+  "calls": {
+    "total": 754,
+    "per_tick": 3.93,
+    "per_tick_max": 6,
+    "over_budget_ticks": 0,
+    "by_role": {
+      "npc_decision": 467,
+      "dialogue": 207,
+      "reflection": 80
+    },
+    "errors": 0,
+    "latency_s": {
+      "median": 3.84,
+      "p90": 8.01
+    },
+    "cache_read_share": 0.667
+  },
+  "residents_thinking_per_tick": {
+    "mean": 2.5,
+    "max": 3
+  },
+  "distinct_residents_who_thought": 200,
+  "decisions": {
+    "made": 480,
+    "json_valid_first_try_pct": 96.5,
+    "retries": 17,
+    "fallbacks": 1
+  },
+  "free_actions": {
+    "intent": 460,
+    "schedule": 37490
+  },
+  "events": 9873,
+  "refusals": 56,
+  "conversations": 86,
+  "lines": 266,
+  "texts": 62,
+  "stopped": null,
+  "flags": {
+    "repeated_line": 2,
+    "echo": 3,
+    "stuck": 4,
+    "impossible_move": 0,
+    "sleepless": 0,
+    "no_reaction": 1,
+    "ghost_contact": 0,
+    "money_from_nowhere": 0,
+    "promise_ignored": 0,
+    "provider_down_window": 0,
+    "id_spoken": 0,
+    "name_unknown": 0,
+    "claim_unfounded": 5,
+    "contact_ungrounded": 8
+  }
+}

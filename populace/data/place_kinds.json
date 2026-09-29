@@ -1,0 +1,2538 @@
+{
+ "kinds": {
+  "house": {
+   "aliases": [
+    "house",
+    "houses",
+    "home",
+    "homes"
+   ],
+   "public": false,
+   "residential": true,
+   "description": [
+    "A narrow two-storey house with a patched roof.",
+    "A bungalow with a gravel drive.",
+    "A terraced house with a bike chained to the railing.",
+    "A detached house with a tidy hedge.",
+    "A clapboard house with a porch swing.",
+    "A semi-detached house with a satellite dish."
+   ],
+   "roles": [],
+   "sells": [],
+   "per_capita": null,
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "hours": null,
+   "name_templates": [
+    "House"
+   ]
+  },
+  "apartment_building": {
+   "aliases": [
+    "apartment",
+    "apartments",
+    "apartment building",
+    "apartment block",
+    "flats",
+    "block of flats",
+    "tower block"
+   ],
+   "public": false,
+   "residential": true,
+   "units": [
+    4,
+    10
+   ],
+   "description": [
+    "A four-storey brick block with a shared stairwell.",
+    "A low-rise block with a buzzer that half works.",
+    "A converted warehouse split into flats.",
+    "A modern block with a car park round the back."
+   ],
+   "name_templates": [
+    "{street_name} Court",
+    "{family} House",
+    "{street_name} Heights",
+    "{street_name} Mansions"
+   ],
+   "roles": [],
+   "sells": [],
+   "per_capita": null,
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "hours": null
+  },
+  "grocery": {
+   "aliases": [
+    "grocery",
+    "groceries",
+    "grocery store",
+    "supermarket",
+    "food store",
+    "market",
+    "corner shop"
+   ],
+   "hours": [
+    14,
+    42
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 1,
+    "per": 250
+   },
+   "name_templates": [
+    "{family}'s Grocery",
+    "{street_name} Market",
+    "Fresh Fare",
+    "The Corner Store",
+    "Valley Foods"
+   ],
+   "description": [
+    "Four aisles, a deli counter and a noticeboard by the door.",
+    "A small supermarket with one till that always sticks."
+   ],
+   "roles": [
+    {
+     "title": "store owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 14,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 35,
+     "uniform": ""
+    },
+    {
+     "title": "cashier",
+     "slots": [
+      2,
+      3
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 14,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "cashier",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 26,
+      "end": 42
+     },
+     "days": [
+      3,
+      4,
+      5,
+      6,
+      0
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "stock clerk",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 12,
+      "end": 28
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "bread",
+     "price": 3,
+     "satiety": 10,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "sandwich",
+     "price": 6,
+     "satiety": 30,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "fruit",
+     "price": 2,
+     "satiety": 8,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "groceries",
+     "price": 25,
+     "satiety": 45,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "newspaper",
+     "price": 2,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "convenience_store": {
+   "aliases": [
+    "convenience store",
+    "bodega",
+    "mini mart",
+    "minimart"
+   ],
+   "hours": [
+    12,
+    46
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "Quick Stop",
+    "{street_name} Mini Mart",
+    "{family}'s Corner Store"
+   ],
+   "description": [
+    "Snacks, lottery tickets and a fridge of cold drinks."
+   ],
+   "roles": [
+    {
+     "title": "owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 30,
+     "uniform": ""
+    },
+    {
+     "title": "clerk",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 28,
+      "end": 46
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "snack",
+     "price": 3,
+     "satiety": 8,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "sandwich",
+     "price": 5,
+     "satiety": 25,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "phone credit",
+     "price": 10,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "diner": {
+   "aliases": [
+    "diner",
+    "diners",
+    "restaurant",
+    "restaurants",
+    "eatery",
+    "canteen"
+   ],
+   "hours": [
+    12,
+    40
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 30,
+    "per": 300
+   },
+   "name_templates": [
+    "The {street_name} Diner",
+    "{family}'s Kitchen",
+    "The Blue Plate",
+    "Sunrise Diner",
+    "The Half Moon"
+   ],
+   "description": [
+    "Red booths, a long counter and coffee that is always on.",
+    "A family place with laminated menus and a daily special."
+   ],
+   "roles": [
+    {
+     "title": "owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.5,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 35,
+     "uniform": ""
+    },
+    {
+     "title": "cook",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 12,
+      "end": 28
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "server",
+     "slots": [
+      2,
+      3
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 14,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "server",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 26,
+      "end": 40
+     },
+     "days": [
+      3,
+      4,
+      5,
+      6,
+      0
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "dishwasher",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 5.0,
+     "shift": {
+      "start": 24,
+      "end": 40
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 16,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "breakfast plate",
+     "price": 11,
+     "satiety": 55,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "burger and fries",
+     "price": 12,
+     "satiety": 60,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "soup",
+     "price": 6,
+     "satiety": 30,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "coffee",
+     "price": 2,
+     "satiety": 3,
+     "tags": [
+      "food"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "cafe": {
+   "aliases": [
+    "cafe",
+    "cafes",
+    "café",
+    "coffee shop",
+    "coffee shops",
+    "coffee house"
+   ],
+   "hours": [
+    13,
+    36
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 60,
+    "per": 250
+   },
+   "name_templates": [
+    "The Daily Grind",
+    "{street_name} Coffee",
+    "Common Ground",
+    "The Copper Kettle",
+    "Bean There"
+   ],
+   "description": [
+    "A handful of tables, a chalkboard menu and a queue at eight.",
+    "Mismatched chairs and a window seat everyone wants."
+   ],
+   "roles": [
+    {
+     "title": "owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 13,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 28,
+     "uniform": ""
+    },
+    {
+     "title": "barista",
+     "slots": [
+      2,
+      3
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 13,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 16,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "coffee",
+     "price": 3,
+     "satiety": 3,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "pastry",
+     "price": 4,
+     "satiety": 15,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "sandwich",
+     "price": 7,
+     "satiety": 30,
+     "tags": [
+      "food"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "bar": {
+   "aliases": [
+    "bar",
+    "bars",
+    "pub",
+    "pubs",
+    "tavern",
+    "saloon"
+   ],
+   "hours": [
+    32,
+    48
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 40,
+    "per": 300
+   },
+   "name_templates": [
+    "The {family} Arms",
+    "The Rusty Anchor",
+    "The Last Stop",
+    "{street_name} Tavern",
+    "The Crown"
+   ],
+   "description": [
+    "Low lights, a dartboard and regulars on the same stools.",
+    "A sports bar with two screens and a quiz on Thursdays."
+   ],
+   "roles": [
+    {
+     "title": "owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.5,
+     "shift": {
+      "start": 32,
+      "end": 48
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 35,
+     "uniform": ""
+    },
+    {
+     "title": "bartender",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 32,
+      "end": 48
+     },
+     "days": [
+      3,
+      4,
+      5,
+      6,
+      0
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 21,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "beer",
+     "price": 6,
+     "satiety": 2,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "bar snacks",
+     "price": 5,
+     "satiety": 12,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "soft drink",
+     "price": 3,
+     "satiety": 1,
+     "tags": [
+      "food"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "pharmacy": {
+   "aliases": [
+    "pharmacy",
+    "pharmacies",
+    "chemist",
+    "drugstore"
+   ],
+   "hours": [
+    16,
+    38
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 150,
+    "per": 800
+   },
+   "name_templates": [
+    "{street_name} Pharmacy",
+    "{family} Chemists",
+    "CarePlus Pharmacy"
+   ],
+   "description": [
+    "Bright aisles, a prescription counter and a waiting chair."
+   ],
+   "roles": [
+    {
+     "title": "pharmacist",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 12.0,
+     "shift": {
+      "start": 16,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 28,
+     "uniform": ""
+    },
+    {
+     "title": "pharmacy assistant",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 16,
+      "end": 38
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "painkillers",
+     "price": 6,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    },
+    {
+     "name": "cold medicine",
+     "price": 9,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "laundromat": {
+   "aliases": [
+    "laundromat",
+    "laundrette",
+    "launderette"
+   ],
+   "hours": [
+    14,
+    44
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 120,
+    "per": 800
+   },
+   "name_templates": [
+    "Suds and Spin",
+    "{street_name} Laundry",
+    "Clean Break"
+   ],
+   "description": [
+    "Rows of machines, a folding table and a TV nobody chose."
+   ],
+   "roles": [
+    {
+     "title": "attendant and owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 5.0,
+     "shift": {
+      "start": 14,
+      "end": 32
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 30,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "wash and dry",
+     "price": 6,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "hair_salon": {
+   "aliases": [
+    "hair salon",
+    "salon",
+    "salons",
+    "barber",
+    "barbershop",
+    "hairdresser",
+    "nail salon",
+    "nail bar"
+   ],
+   "hours": [
+    18,
+    38
+   ],
+   "days": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{family}'s Cuts",
+    "Shear Magic",
+    "The Parlour",
+    "Top Cut"
+   ],
+   "description": [
+    "Three chairs, a wall of mirrors and a radio."
+   ],
+   "roles": [
+    {
+     "title": "stylist and owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 18,
+      "end": 36
+     },
+     "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 25,
+     "uniform": ""
+    },
+    {
+     "title": "stylist",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.5,
+     "shift": {
+      "start": 18,
+      "end": 36
+     },
+     "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "haircut",
+     "price": 18,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "hardware_store": {
+   "aliases": [
+    "hardware store",
+    "hardware shop",
+    "diy store"
+   ],
+   "hours": [
+    16,
+    36
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{family} Hardware",
+    "{street_name} Tools and Timber",
+    "Fix-It Supply"
+   ],
+   "description": [
+    "Nails by the pound, paint mixed to order, advice for free."
+   ],
+   "roles": [
+    {
+     "title": "owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 35,
+     "uniform": ""
+    },
+    {
+     "title": "sales assistant",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "tools",
+     "price": 25,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    },
+    {
+     "name": "paint",
+     "price": 18,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "bakery": {
+   "aliases": [
+    "bakery",
+    "bakeries",
+    "patisserie"
+   ],
+   "hours": [
+    12,
+    32
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{family}'s Bakery",
+    "The Rolling Pin",
+    "Daily Bread"
+   ],
+   "description": [
+    "Warm bread by seven and a queue out of the door on Saturdays."
+   ],
+   "roles": [
+    {
+     "title": "baker and owner",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.5,
+     "shift": {
+      "start": 8,
+      "end": 28
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 28,
+     "uniform": ""
+    },
+    {
+     "title": "counter assistant",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 12,
+      "end": 32
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 16,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "bread",
+     "price": 3,
+     "satiety": 10,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "pastry",
+     "price": 3,
+     "satiety": 15,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "pie",
+     "price": 5,
+     "satiety": 30,
+     "tags": [
+      "food"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "school": {
+   "aliases": [
+    "school",
+    "schools",
+    "high school",
+    "primary school",
+    "elementary school",
+    "middle school",
+    "academy"
+   ],
+   "hours": [
+    16,
+    34
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "per_capita": {
+    "min_population": 80,
+    "per": 600
+   },
+   "name_templates": [
+    "{street_name} School",
+    "{town} High School",
+    "St. Anne's School",
+    "{street_name} Academy"
+   ],
+   "description": [
+    "A brick building with a fenced yard and a bell that rings at quarter to nine."
+   ],
+   "roles": [
+    {
+     "title": "head teacher",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 14.0,
+     "shift": {
+      "start": 15,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 40,
+     "uniform": ""
+    },
+    {
+     "title": "teacher",
+     "slots": [
+      4,
+      8
+     ],
+     "wage_per_tick": 11.0,
+     "shift": {
+      "start": 16,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 23,
+     "uniform": ""
+    },
+    {
+     "title": "school secretary",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 16,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "caretaker",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 6.5,
+     "shift": {
+      "start": 13,
+      "end": 31
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "lunch cook",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 6.0,
+     "shift": {
+      "start": 18,
+      "end": 29
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "students": true,
+   "public": true
+  },
+  "clinic": {
+   "aliases": [
+    "clinic",
+    "clinics",
+    "health centre",
+    "health center",
+    "doctor",
+    "doctors",
+    "surgery",
+    "medical centre",
+    "hospital"
+   ],
+   "hours": [
+    16,
+    36
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "per_capita": {
+    "min_population": 150,
+    "per": 800
+   },
+   "name_templates": [
+    "{street_name} Health Centre",
+    "{town} Family Clinic",
+    "Riverside Medical Practice"
+   ],
+   "description": [
+    "A waiting room of plastic chairs and a receptionist who knows everyone."
+   ],
+   "roles": [
+    {
+     "title": "doctor",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 20.0,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 30,
+     "uniform": ""
+    },
+    {
+     "title": "nurse",
+     "slots": [
+      1,
+      3
+     ],
+     "wage_per_tick": 11.0,
+     "shift": {
+      "start": 15,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 22,
+     "uniform": ""
+    },
+    {
+     "title": "receptionist",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 6.5,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "appointment",
+     "price": 20,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "factory": {
+   "aliases": [
+    "factory",
+    "factories",
+    "plant",
+    "mill",
+    "works",
+    "manufacturing plant",
+    "bottling plant"
+   ],
+   "hours": [
+    12,
+    44
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{town} Components",
+    "Northfield Packaging",
+    "Ridgeway Plastics",
+    "{family} and Sons Manufacturing",
+    "Allied Fabrication"
+   ],
+   "description": [
+    "A long shed with a loading bay, a time clock and the smell of hot metal."
+   ],
+   "roles": [
+    {
+     "title": "plant manager",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 15.0,
+     "shift": {
+      "start": 15,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 35,
+     "uniform": ""
+    },
+    {
+     "title": "shift supervisor",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 10.0,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 28,
+     "uniform": ""
+    },
+    {
+     "title": "machine operator",
+     "slots": [
+      5,
+      14
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": "in a factory polo shirt"
+    },
+    {
+     "title": "machine operator",
+     "slots": [
+      2,
+      6
+     ],
+     "wage_per_tick": 8.5,
+     "shift": {
+      "start": 28,
+      "end": 44
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": "in a factory polo shirt"
+    },
+    {
+     "title": "forklift driver",
+     "slots": [
+      1,
+      3
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": "in a hi-vis vest"
+    },
+    {
+     "title": "office clerk",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 16,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "public": true
+  },
+  "warehouse": {
+   "aliases": [
+    "warehouse",
+    "warehouses",
+    "distribution centre",
+    "distribution center",
+    "depot"
+   ],
+   "hours": [
+    10,
+    46
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{town} Distribution",
+    "Swift Logistics Depot",
+    "Midland Freight"
+   ],
+   "description": [
+    "High shelves, a row of loading doors and a radio playing to nobody."
+   ],
+   "roles": [
+    {
+     "title": "depot manager",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 13.0,
+     "shift": {
+      "start": 15,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 32,
+     "uniform": ""
+    },
+    {
+     "title": "warehouse operative",
+     "slots": [
+      4,
+      10
+     ],
+     "wage_per_tick": 7.5,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": "in a hi-vis vest"
+    },
+    {
+     "title": "delivery driver",
+     "slots": [
+      2,
+      4
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 14,
+      "end": 32
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "public": true
+  },
+  "office": {
+   "aliases": [
+    "office",
+    "offices",
+    "office park",
+    "business park",
+    "call centre",
+    "call center",
+    "bank"
+   ],
+   "hours": [
+    16,
+    36
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{town} Insurance",
+    "Crestline Accounting",
+    "{street_name} Business Centre",
+    "Harbour Credit Union"
+   ],
+   "description": [
+    "Open-plan desks, a kitchenette and a printer everyone blames."
+   ],
+   "roles": [
+    {
+     "title": "office manager",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 13.0,
+     "shift": {
+      "start": 16,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 32,
+     "uniform": ""
+    },
+    {
+     "title": "clerk",
+     "slots": [
+      2,
+      6
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 17,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "customer adviser",
+     "slots": [
+      2,
+      5
+     ],
+     "wage_per_tick": 7.5,
+     "shift": {
+      "start": 16,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    },
+    {
+     "title": "accountant",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 12.0,
+     "shift": {
+      "start": 17,
+      "end": 35
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 25,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "public": true
+  },
+  "workshop": {
+   "aliases": [
+    "garage",
+    "auto shop",
+    "auto repair",
+    "mechanic",
+    "workshop",
+    "body shop",
+    "car repair"
+   ],
+   "hours": [
+    16,
+    36
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{family}'s Garage",
+    "{street_name} Auto Repair",
+    "Precision Motors"
+   ],
+   "description": [
+    "Two bays, a car on a lift and a calendar from three years ago."
+   ],
+   "roles": [
+    {
+     "title": "owner and mechanic",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 9.0,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": true,
+     "min_age": 30,
+     "uniform": "in oil-stained overalls"
+    },
+    {
+     "title": "mechanic",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 16,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": "in oil-stained overalls"
+    },
+    {
+     "title": "apprentice",
+     "slots": [
+      0,
+      1
+     ],
+     "wage_per_tick": 5.0,
+     "shift": {
+      "start": 16,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 16,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "oil change",
+     "price": 40,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "gas_station": {
+   "aliases": [
+    "gas station",
+    "petrol station",
+    "service station",
+    "filling station"
+   ],
+   "hours": [
+    12,
+    46
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 120,
+    "per": 800
+   },
+   "name_templates": [
+    "{street_name} Fuel",
+    "QuickFill",
+    "Crossroads Service Station"
+   ],
+   "description": [
+    "Four pumps, a car wash that is often out of order and a shop of snacks."
+   ],
+   "roles": [
+    {
+     "title": "station manager",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 12,
+      "end": 30
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 28,
+     "uniform": ""
+    },
+    {
+     "title": "attendant",
+     "slots": [
+      2,
+      3
+     ],
+     "wage_per_tick": 5.5,
+     "shift": {
+      "start": 28,
+      "end": 46
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "snack",
+     "price": 3,
+     "satiety": 8,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "coffee",
+     "price": 2,
+     "satiety": 3,
+     "tags": [
+      "food"
+     ]
+    },
+    {
+     "name": "fuel",
+     "price": 45,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "library": {
+   "aliases": [
+    "library",
+    "libraries"
+   ],
+   "hours": [
+    18,
+    38
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": {
+    "min_population": 250,
+    "per": 1000
+   },
+   "name_templates": [
+    "{town} Public Library",
+    "{street_name} Library"
+   ],
+   "description": [
+    "Quiet rooms, public computers and a children's corner."
+   ],
+   "roles": [
+    {
+     "title": "librarian",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 9.0,
+     "shift": {
+      "start": 18,
+      "end": 38
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 25,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "public": true
+  },
+  "church": {
+   "aliases": [
+    "church",
+    "churches",
+    "chapel",
+    "mosque",
+    "temple",
+    "synagogue",
+    "place of worship"
+   ],
+   "hours": [
+    14,
+    42
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 100,
+    "per": 500
+   },
+   "name_templates": [
+    "St. Mary's Church",
+    "{street_name} Chapel",
+    "Grace Community Church",
+    "Hope Chapel"
+   ],
+   "description": [
+    "Wooden pews, a hall at the back and a rota pinned by the door."
+   ],
+   "roles": [
+    {
+     "title": "minister",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 18,
+      "end": 36
+     },
+     "days": [
+      6,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 35,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "gathering_day": 6,
+   "public": true
+  },
+  "community_center": {
+   "aliases": [
+    "community center",
+    "community centre",
+    "community hall",
+    "town hall",
+    "youth club",
+    "rec center"
+   ],
+   "hours": [
+    16,
+    44
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 200,
+    "per": 1000
+   },
+   "name_templates": [
+    "{town} Community Centre",
+    "{street_name} Hall"
+   ],
+   "description": [
+    "A hall with stacking chairs, a noticeboard and a kitchen hatch."
+   ],
+   "roles": [
+    {
+     "title": "centre manager",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 18,
+      "end": 36
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 30,
+     "uniform": ""
+    }
+   ],
+   "sells": [],
+   "leisure": true,
+   "public": true
+  },
+  "post_office": {
+   "aliases": [
+    "post office",
+    "post offices"
+   ],
+   "hours": [
+    18,
+    34
+   ],
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_capita": null,
+   "name_templates": [
+    "{town} Post Office"
+   ],
+   "description": [
+    "A counter, a queue and a rack of greetings cards."
+   ],
+   "roles": [
+    {
+     "title": "postmaster",
+     "slots": [
+      1,
+      1
+     ],
+     "wage_per_tick": 8.0,
+     "shift": {
+      "start": 18,
+      "end": 34
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hires": true,
+     "owner": false,
+     "min_age": 30,
+     "uniform": ""
+    },
+    {
+     "title": "postal worker",
+     "slots": [
+      1,
+      2
+     ],
+     "wage_per_tick": 7.0,
+     "shift": {
+      "start": 12,
+      "end": 26
+     },
+     "days": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "hires": false,
+     "owner": false,
+     "min_age": 18,
+     "uniform": ""
+    }
+   ],
+   "sells": [
+    {
+     "name": "stamps",
+     "price": 2,
+     "satiety": 0,
+     "tags": [
+      "goods"
+     ]
+    }
+   ],
+   "public": true
+  },
+  "park": {
+   "aliases": [
+    "park",
+    "parks",
+    "green",
+    "playground",
+    "common",
+    "recreation ground"
+   ],
+   "hours": null,
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "per_capita": {
+    "min_population": 1,
+    "per": 400
+   },
+   "name_templates": [
+    "{street_name} Park",
+    "{town} Common",
+    "Willow Green",
+    "Memorial Park"
+   ],
+   "description": [
+    "Grass, a few benches, a playground and a path round the pond.",
+    "A green with a bandstand and dog walkers at dawn."
+   ],
+   "roles": [],
+   "sells": [],
+   "leisure": true,
+   "public": true
+  },
+  "offtown": {
+   "aliases": [],
+   "public": false,
+   "hours": null,
+   "name_templates": [
+    "the city"
+   ],
+   "description": [
+    "Out of town: the city, a commute away."
+   ],
+   "roles": [],
+   "sells": [],
+   "per_capita": null,
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  }
+ },
+ "composites": {
+  "strip mall": [
+   "grocery",
+   "pharmacy",
+   "laundromat",
+   "diner",
+   "hair_salon"
+  ],
+  "shopping centre": [
+   "grocery",
+   "pharmacy",
+   "cafe",
+   "hair_salon",
+   "convenience_store"
+  ],
+  "shopping center": [
+   "grocery",
+   "pharmacy",
+   "cafe",
+   "hair_salon",
+   "convenience_store"
+  ],
+  "high street": [
+   "grocery",
+   "cafe",
+   "bakery",
+   "pharmacy",
+   "hardware_store",
+   "post_office",
+   "bar"
+  ],
+  "main street": [
+   "grocery",
+   "diner",
+   "cafe",
+   "hardware_store",
+   "post_office",
+   "bar"
+  ],
+  "industrial estate": [
+   "factory",
+   "warehouse",
+   "workshop"
+  ],
+  "industrial park": [
+   "factory",
+   "warehouse",
+   "workshop"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+  "town": "Upton Green",
+  "residents": 12,
+  "preset": "laptop",
+  "low_fidelity": false,
+  "profile": "frontier",
+  "mock": true,
+  "model": [
+    "mock"
+  ],
+  "from": "Day 1 06:00",
+  "ticks": 48,
+  "wall_s": 0.0,
+  "ticks_per_min": 0.0,
+  "minutes_per_day": 0.0,
+  "seconds_per_day": 0.0,
+  "tick_wall_s": {
+    "median": 0.0,
+    "p90": 0.0
+  },
+  "budget_per_tick": 6,
+  "calls": {
+    "total": 166,
+    "per_tick": 3.46,
+    "per_tick_max": 6,
+    "over_budget_ticks": 0,
+    "by_role": {
+      "npc_decision": 99,
+      "dialogue": 55,
+      "reflection": 12
+    },
+    "errors": 0,
+    "latency_s": {
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "cache_read_share": 0.894
+  },
+  "residents_thinking_per_tick": {
+    "mean": 2.06,
+    "max": 3
+  },
+  "distinct_residents_who_thought": 12,
+  "decisions": {
+    "made": 99,
+    "json_valid_first_try_pct": 92.4,
+    "retries": 8,
+    "fallbacks": 0
+  },
+  "free_actions": {
+    "intent": 39,
+    "schedule": 445
+  },
+  "events": 297,
+  "refusals": 19,
+  "conversations": 20,
+  "lines": 67,
+  "texts": 11,
+  "stopped": null,
+  "flags": {
+    "repeated_line": 6,
+    "echo": 3,
+    "stuck": 1,
+    "impossible_move": 0,
+    "sleepless": 0,
+    "no_reaction": 0,
+    "ghost_contact": 0,
+    "money_from_nowhere": 0,
+    "promise_ignored": 0,
+    "provider_down_window": 0,
+    "id_spoken": 0,
+    "name_unknown": 0,
+    "claim_unfounded": 1,
+    "contact_ungrounded": 0
+  }
+}

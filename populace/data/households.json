@@ -1,0 +1,177 @@
+{
+ "templates": [
+  {
+   "kind": "single",
+   "weight": 21,
+   "members": [
+    [
+     "adult",
+     "self"
+    ]
+   ]
+  },
+  {
+   "kind": "couple",
+   "weight": 20,
+   "members": [
+    [
+     "adult",
+     "partner"
+    ],
+    [
+     "adult",
+     "partner"
+    ]
+   ]
+  },
+  {
+   "kind": "family",
+   "weight": 27,
+   "members": [
+    [
+     "adult",
+     "parent"
+    ],
+    [
+     "adult",
+     "parent"
+    ],
+    [
+     "teen_or_young",
+     "child"
+    ],
+    [
+     "kid",
+     "child"
+    ]
+   ]
+  },
+  {
+   "kind": "big_family",
+   "weight": 6,
+   "members": [
+    [
+     "adult",
+     "parent"
+    ],
+    [
+     "adult",
+     "parent"
+    ],
+    [
+     "teen_or_young",
+     "child"
+    ],
+    [
+     "teen_or_young",
+     "child"
+    ],
+    [
+     "kid",
+     "child"
+    ]
+   ]
+  },
+  {
+   "kind": "single_parent",
+   "weight": 8,
+   "members": [
+    [
+     "adult",
+     "parent"
+    ],
+    [
+     "teen_or_young",
+     "child"
+    ],
+    [
+     "kid",
+     "child"
+    ]
+   ]
+  },
+  {
+   "kind": "older_couple",
+   "weight": 9,
+   "members": [
+    [
+     "older",
+     "partner"
+    ],
+    [
+     "older",
+     "partner"
+    ]
+   ]
+  },
+  {
+   "kind": "older_single",
+   "weight": 5,
+   "members": [
+    [
+     "older",
+     "self"
+    ]
+   ]
+  },
+  {
+   "kind": "sharers",
+   "weight": 4,
+   "members": [
+    [
+     "young_adult",
+     "flatmate"
+    ],
+    [
+     "young_adult",
+     "flatmate"
+    ],
+    [
+     "young_adult",
+     "flatmate"
+    ]
+   ]
+  }
+ ],
+ "ages": {
+  "adult": [
+   26,
+   64
+  ],
+  "young_adult": [
+   19,
+   30
+  ],
+  "older": [
+   66,
+   84
+  ],
+  "teen_or_young": [
+   11,
+   21
+  ],
+  "kid": [
+   0,
+   12
+  ]
+ },
+ "simulated_min_age": 13,
+ "apartment_share": 0.35,
+ "renter_share_of_houses": 0.3,
+ "culture_mix_default": {
+  "anglo": 46,
+  "hispanic": 16,
+  "west_african": 8,
+  "south_asian": 9,
+  "east_asian": 8,
+  "eastern_european": 8,
+  "arabic": 5
+ },
+ "not_working": {
+  "between_jobs": 0.35,
+  "homemaker": 0.3,
+  "carer": 0.15,
+  "unable_to_work": 0.2
+ },
+ "held_open_probability": 0.3
+}

@@ -1,0 +1,23 @@
+{
+ "bedtime": [
+  42,
+  46
+ ],
+ "late_bedtime_after_shift": 3,
+ "wake_before_shift": 3,
+ "wake_free_day": [
+  15,
+  18
+ ],
+ "retired_wake": [
+  13,
+  16
+ ],
+ "evening_out_probability": 0.3,
+ "churchgoer_probability": 0.25,
+ "lunch_out_probability": 0.3,
+ "student_hours": [
+  16,
+  32
+ ]
+}

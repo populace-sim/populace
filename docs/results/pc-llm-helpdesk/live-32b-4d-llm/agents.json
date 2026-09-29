@@ -1,0 +1,8 @@
+{
+  "northline": {
+    "agent": "populace_agent_llm_helpdesk.LlmHelpdesk",
+    "kind": "language model",
+    "model": "populace",
+    "server": "http://127.0.0.1:8080/v1/"
+  }
+}
