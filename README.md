@@ -16,8 +16,8 @@ A resident knows only what they saw, heard or were told. News travels by
 people being in the same place and talking. Nobody is instructed to react to
 what you drop in; they decide for themselves, one model call at a time.
 
-> **Pre-release, private.** MIT licensed. Formerly called *worldsim*; built
-> from the brain of *Alive*, a life-sim where every character is an LLM agent.
+> MIT licensed. Formerly called *worldsim*; built from the brain of *Alive*,
+> a life-sim where every character is an LLM agent.
 
 What residents said to their internet provider, word for word, in the first
 four-day run (Qwen3-32B; the appendix of
