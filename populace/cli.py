@@ -16,6 +16,12 @@ from . import __version__
 from .config import Config, PRESETS
 
 
+def _hosted(overrides: dict, args) -> dict:
+    """Merge `--thinking-off` into a run's overrides."""
+    from .config import deep_merge, thinking_off_overrides
+    return deep_merge(overrides, thinking_off_overrides(getattr(args, "thinking_off", None)))
+
+
 def _config_from(args) -> Config:
     overrides: dict = {}
     if getattr(args, "model_url", None):
@@ -24,7 +30,7 @@ def _config_from(args) -> Config:
         # mlx_lm.server routes by this name; llama-server ignores it.
         from .config import ROLES
         overrides["roles"] = {role: {"model": args.model} for role in ROLES}
-    return Config.build(getattr(args, "preset", None), overrides)
+    return Config.build(getattr(args, "preset", None), _hosted(overrides, args))
 
 
 def cmd_new(args) -> int:
@@ -136,7 +142,7 @@ def cmd_inject(args) -> int:
 
 def cmd_demo(args) -> int:
     from .demos import isp
-    from .observe.manifest import build_manifest, headline
+    from .observe.manifest import build_manifest, headline, usage_line
     from .observe.report import write
     from .sim.run import run_town, ticks_for_days
 
@@ -164,11 +170,13 @@ def cmd_demo(args) -> int:
         overrides["roles"] = {role: {"model": args.model} for role in ROLES}
     if args.profile:
         overrides["prompt"] = {"profile": args.profile}
+    overrides = _hosted(overrides, args)
     mock = args.provider == "mock" and not args.model_url and not args.model
     print(f"Running the ISP demo: {args.residents} residents, {args.days} days, "
           f"{'mock (free, no model)' if mock else 'live model'}, preset {args.preset or 'laptop'}")
     agents = {isp.SERVICE_ID: isp.NorthlineSupport(),
-              **_agents_from(args.agent or [], model_url=args.model_url, model=args.model, mock=mock)}
+              **_agents_from(args.agent or [], model_url=args.model_url, model=args.model, mock=mock,
+                            thinking_off=args.thinking_off)}
     from .sim.run import describe_agent
     who = describe_agent(agents[isp.SERVICE_ID])
     print(f"Northline is answered by {who['agent'].rsplit('.', 1)[-1]}"
@@ -182,7 +190,9 @@ def cmd_demo(args) -> int:
     result = asyncio.run(run_town(out, ticks_for_days(args.days), mock=mock, preset=args.preset,
                                   overrides=overrides or None, run_id=args.run_id, progress=progress,
                                   agents=agents))
-    print(headline(build_manifest(result)))
+    manifest = build_manifest(result)
+    print(headline(manifest))
+    print(usage_line(manifest))
     print(f"Report: {write(result['run_dir'])}")
     return 1 if result["reports"] and result["reports"][-1].stopped else 0
 
@@ -213,7 +223,7 @@ def cmd_report(args) -> int:
 
 
 def _agents_from(specs: list[str], model_url: str | None = None, model: str | None = None,
-                 mock: bool = True) -> dict:
+                 mock: bool = True, thinking_off: str | None = None) -> dict:
     """`--agent SERVICE=helpdesk`, `=echo`, `=http://host:port/`, or
     `=path/to/agent.py`: a file with `make_agent(model_url, model, mock)`,
     which is handed the run's own model server (see examples/llm_helpdesk.py)."""
@@ -232,7 +242,8 @@ def _agents_from(specs: list[str], model_url: str | None = None, model: str | No
         elif what.startswith(("http://", "https://")):
             out[sid] = HttpAgent(what)
         elif what.endswith(".py"):
-            out[sid] = _agent_from_file(Path(what), model_url=model_url, model=model, mock=mock)
+            out[sid] = _agent_from_file(Path(what), model_url=model_url, model=model, mock=mock,
+                                        thinking_off=thinking_off)
         else:
             raise SystemExit(f"--agent {sid}=: use helpdesk, echo, an http:// URL or a .py file; got {what!r}")
     return out
@@ -250,6 +261,10 @@ def _agent_from_file(path: Path, **kw):
     make = getattr(module, "make_agent", None)
     if not callable(make):
         raise SystemExit(f"--agent: {path} has no make_agent(model_url, model, mock)")
+    import inspect
+    params = inspect.signature(make).parameters
+    if not any(p.kind is p.VAR_KEYWORD for p in params.values()):
+        kw = {k: v for k, v in kw.items() if k in params}   # an older make_agent(model_url, model, mock)
     return make(**kw)
 
 
@@ -265,6 +280,7 @@ def cmd_run(args) -> int:
         overrides["roles"] = {role: {"model": args.model} for role in ROLES}
     if args.profile:
         overrides["prompt"] = {"profile": args.profile}
+    overrides = _hosted(overrides, args)
     mock = args.provider == "mock" and not args.model_url and not args.model
     ticks = args.ticks if args.ticks is not None else ticks_for_days(args.days)
     if args.preset in LOW_FIDELITY_PRESETS:
@@ -281,13 +297,15 @@ def cmd_run(args) -> int:
               f"{report.residents_thinking} thinking, {report.events} events, "
               f"{report.wall_ms / 1000:.1f}s{flag}", flush=True)
 
-    agents = _agents_from(args.agent or [], model_url=args.model_url, model=args.model, mock=mock)
+    agents = _agents_from(args.agent or [], model_url=args.model_url, model=args.model, mock=mock,
+                            thinking_off=args.thinking_off)
     out = asyncio.run(run_town(args.town, ticks, mock=mock, preset=args.preset,
                                overrides=overrides or None, run_id=args.run_id, progress=progress,
                                agents=agents))
-    from .observe.manifest import build_manifest, headline
+    from .observe.manifest import build_manifest, headline, usage_line
     manifest = build_manifest(out)
     print(headline(manifest))
+    print(usage_line(manifest))
     print(f"Logs: {out['run_dir']}")
     print(f"Report: populace report {out['run_dir']}")
     return 1 if out["reports"] and out["reports"][-1].stopped else 0
@@ -308,6 +326,9 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--provider", choices=("mock", "local"), default="mock",
                      help="who writes persona prose: mock (free templates) or the local model")
     new.add_argument("--model-url", help="an OpenAI-compatible endpoint, e.g. http://pc:8080/v1")
+    new.add_argument("--thinking-off", choices=("openrouter", "no-think"), default=None,
+                     help="turn the model's thinking off per request on a hosted API: "
+                     "openrouter (its reasoning field) or no-think (Qwen3's /no_think); other hosts differ")
     new.add_argument("--model", help="model name to request (mlx_lm.server needs the repo id)")
     new.add_argument("--model-spec", action="store_true",
                      help="also ask the model to read the description (falls back to the rules)")
@@ -330,6 +351,9 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--ticks", type=int, default=None, help="overrides --days")
     run.add_argument("--provider", choices=("mock", "local"), default="mock")
     run.add_argument("--model-url", help="an OpenAI-compatible endpoint, e.g. http://pc:8080/v1")
+    run.add_argument("--thinking-off", choices=("openrouter", "no-think"), default=None,
+                     help="turn the model's thinking off per request on a hosted API: "
+                     "openrouter (its reasoning field) or no-think (Qwen3's /no_think); other hosts differ")
     run.add_argument("--model", help="model name to request (mlx_lm.server needs the repo id)")
     run.add_argument("--preset", choices=sorted(PRESETS), default=None)
     run.add_argument("--profile", choices=("frontier", "compact"))
@@ -360,6 +384,9 @@ def build_parser() -> argparse.ArgumentParser:
     demo.add_argument("--seed", type=int, default=7)
     demo.add_argument("--provider", choices=("mock", "local"), default="mock")
     demo.add_argument("--model-url", help="an OpenAI-compatible endpoint, e.g. http://127.0.0.1:8080/v1")
+    demo.add_argument("--thinking-off", choices=("openrouter", "no-think"), default=None,
+                     help="turn the model's thinking off per request on a hosted API: "
+                     "openrouter (its reasoning field) or no-think (Qwen3's /no_think); other hosts differ")
     demo.add_argument("--model", help="model name to request")
     demo.add_argument("--concurrency", type=int, help="calls at once to the model server")
     demo.add_argument("--preset", choices=sorted(PRESETS), default=None)
@@ -382,6 +409,9 @@ def build_parser() -> argparse.ArgumentParser:
                         help="add a model-written retelling at the top, labelled as such")
     report.add_argument("--provider", choices=("mock", "local"), default="mock")
     report.add_argument("--model-url", help="an OpenAI-compatible endpoint for --narrate")
+    report.add_argument("--thinking-off", choices=("openrouter", "no-think"), default=None,
+                     help="turn the model's thinking off per request on a hosted API: "
+                     "openrouter (its reasoning field) or no-think (Qwen3's /no_think); other hosts differ")
     report.add_argument("--model", help="model name to request for --narrate")
     report.set_defaults(func=cmd_report)
     return parser

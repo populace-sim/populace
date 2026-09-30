@@ -38,6 +38,19 @@ model call (the old parser reproduces the PC's lines exactly, so the method is
 faithful). One false flag is left: "65 resident" in the rule-based retelling,
 where "65 resident contacts" uses "resident" as an adjective.
 
+**Hosted APIs** (owner's request after launch, 29 September; nothing run
+against a paid endpoint). `POPULACE_API_KEY` is the only way a key gets in, for
+the residents and for `examples/llm_helpdesk.py`; without it a placeholder
+goes, as before. Any error or reply that echoes the key has it replaced before
+it is logged. `--thinking-off openrouter|no-think` on `new`, `run`, `demo` and
+`report` sets each role's request options (OpenRouter's `reasoning`, or
+Qwen3's `/no_think` on the last user message); the helpdesk takes the same.
+Every run prints its model calls and tokens in and out, from the server's
+usage field ("Model use: ..."), and the report's At a glance has a "Tokens in /
+out" row; the manifest keeps them under `tokens` and `agent_calls`. Tested
+against a fake host that echoes the key: it arrives only as the Authorization
+header, and no file under the town and nothing printed contains it.
+
 **The PC needs a fresh clone**: its checkout's history is not this
 repository's, so `git pull` there will refuse (unrelated histories). Keep
 `towns\` from the old checkout if its runs are wanted, then:
@@ -67,7 +80,7 @@ owner's call after reading them.
 | **Step 6: rename, launch README, launch drafts** | **Done, private. Waiting for the owner's decision to go public** |
 | Model step | Parked (see "Decisions already made") |
 
-**Tests: 287**, none needing a model, about two and a half minutes; the
+**Tests: 294**, none needing a model, about two and a half minutes; the
 week-long determinism gate is most of that.
 
 ## The LLM helpdesk (before launch)

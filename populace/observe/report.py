@@ -156,6 +156,7 @@ def _glance(m: dict[str, Any]) -> list[str]:
         ("Residents thinking per tick", f"{m.get('residents_thinking_per_tick', {}).get('mean')} on average"),
         ("Residents who thought at least once", m.get("distinct_residents_who_thought")),
         ("Calls", f"{calls.get('total')} ({', '.join(f'{k} {v}' for k, v in sorted(calls.get('by_role', {}).items()))})"),
+        ("Tokens in / out", _tokens_cell(m)),
         ("Ticks over budget", calls.get("over_budget_ticks")),
         ("Decisions valid first try", f"{d.get('json_valid_first_try_pct')}%"),
         ("Conversations / lines / texts", f"{m.get('conversations')} / {m.get('lines')} / {m.get('texts')}"),
@@ -164,6 +165,24 @@ def _glance(m: dict[str, Any]) -> list[str]:
     if m.get("stopped"):
         rows.append(("Stopped early", m["stopped"]))
     return ["| | |", "|---|---|"] + [f"| {k} | {v} |" for k, v in rows]
+
+
+def _tokens_cell(m: dict[str, Any]) -> str:
+    """What the run cost, from the server's usage field; the agent's own apart."""
+    t = m.get("tokens")
+    if m.get("mock"):
+        cell = "none: a mock run calls no model"
+    elif not t:
+        cell = "not recorded (a run from before token totals)"
+    elif not t.get("calls_with_usage"):
+        cell = "not reported by the server"
+    else:
+        cell = (f"{t['in']:,} ({t['in_from_cache']:,} from the prompt cache) / {t['out']:,}"
+                + (f"; {t['calls_without_usage']} calls reported none" if t.get("calls_without_usage") else ""))
+    a = m.get("agent_calls")
+    if a and a.get("calls_with_usage") and not m.get("mock"):
+        cell += f"; the agent's own model {a['in']:,} / {a['out']:,} over {a['calls']} calls"
+    return cell
 
 
 def _what_happened(ctx) -> list[str]:

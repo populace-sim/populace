@@ -13,6 +13,7 @@
 | Residents thinking per tick | 2.06 on average |
 | Residents who thought at least once | 12 |
 | Calls | 166 (dialogue 55, npc_decision 99, reflection 12) |
+| Tokens in / out | none: a mock run calls no model |
 | Ticks over budget | 0 |
 | Decisions valid first try | 92.4% |
 | Conversations / lines / texts | 20 / 67 / 11 |

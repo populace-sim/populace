@@ -67,6 +67,8 @@ def build_manifest(out: dict[str, Any]) -> dict[str, Any]:
                                       max(1, sum(c.get("cache_read_tokens", 0) + c.get("input_tokens", 0)
                                                  for c in calls)), 3),
         },
+        "tokens": _tokens(calls),
+        "agent_calls": _agent_tokens(run_dir),
         "residents_thinking_per_tick": {"mean": round(sum(thinking) / ticks, 2) if ticks else 0,
                                         "max": max(thinking, default=0)},
         "distinct_residents_who_thought": len({c["char_id"] for c in decisions}),
@@ -93,6 +95,54 @@ def build_manifest(out: dict[str, Any]) -> dict[str, Any]:
     manifest["flags"] = {name: len(found) for name, found in F.run_all(load(run_dir)["run"]).items()}
     (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
+
+
+def _tokens(calls: list[dict[str, Any]]) -> dict[str, Any]:
+    """What the model server said the run used, from each reply's usage field.
+    Calls whose reply had none (the mock's are estimates) are counted apart."""
+    reported = [c for c in calls if c.get("usage_reported")]
+    return {
+        "calls_with_usage": len(reported),
+        "calls_without_usage": len(calls) - len(reported),
+        "in": sum(c.get("input_tokens", 0) + c.get("cache_read_tokens", 0) + c.get("cache_write_tokens", 0)
+                  for c in reported),
+        "in_from_cache": sum(c.get("cache_read_tokens", 0) for c in reported),
+        "out": sum(c.get("output_tokens", 0) for c in reported),
+    }
+
+
+def _agent_tokens(run_dir) -> dict[str, Any] | None:
+    """An agent's own model calls, if it logged them (`ctx.log`)."""
+    path = run_dir / "agent_calls.jsonl"
+    if not path.exists():
+        return None
+    calls = [c for line in open(path, encoding="utf-8") if line.strip()
+             for c in json.loads(line).get("calls", [])]
+    reported = [c for c in calls if c.get("usage_reported", c.get("tokens_in", 0) > 0)]
+    return {"calls": len(calls), "calls_with_usage": len(reported),
+            "in": sum(c.get("tokens_in", 0) for c in reported),
+            "out": sum(c.get("tokens_out", 0) for c in reported)}
+
+
+def usage_line(m: dict[str, Any]) -> str:
+    """What a run cost, in model calls and tokens, printed at the end of every run."""
+    t = m.get("tokens") or {}
+    calls = (m.get("calls") or {}).get("total", 0)
+    if m.get("mock"):
+        out = f"Model use: mock, no model called ({calls} mock calls; the mock's token counts are estimates, not shown)."
+    elif not t.get("calls_with_usage"):
+        out = f"Model use: {calls} calls; the server reported no token usage."
+    else:
+        out = (f"Model use: {calls} calls; tokens in {t['in']:,} (of them {t['in_from_cache']:,} from the "
+               f"prompt cache), out {t['out']:,}"
+               + (f"; {t['calls_without_usage']} calls reported no usage" if t.get("calls_without_usage") else "")
+               + ".")
+    a = m.get("agent_calls")
+    if a and a.get("calls"):
+        out += (f" The agent's own model: {a['calls']} calls"
+                + (f", tokens in {a['in']:,}, out {a['out']:,}" if a.get("calls_with_usage") else ", no usage reported")
+                + ".")
+    return out
 
 
 def headline(m: dict[str, Any]) -> str:

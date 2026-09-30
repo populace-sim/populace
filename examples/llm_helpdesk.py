@@ -101,6 +101,7 @@ class ChatResult:
     tokens_in: int = 0
     tokens_out: int = 0
     model: str = ""
+    usage_reported: bool = False
 
 
 class Chat(Protocol):
@@ -112,13 +113,27 @@ class AgentModelError(RuntimeError):
 
 
 class OpenAIChat:
-    """Any OpenAI-compatible server: llama.cpp's llama-server, vLLM, mlx_lm.server."""
+    """Any OpenAI-compatible server: llama.cpp's llama-server, vLLM, mlx_lm.server,
+    or a hosted API. The key, if any, comes from POPULACE_API_KEY, like the
+    residents'. `thinking_off` is None for a local server started with
+    thinking off (the request also asks, the llama.cpp way), or "openrouter" /
+    "no-think" for a hosted one, as for the residents (`--thinking-off`)."""
 
     def __init__(self, base_url: str, model: str = "populace", max_tokens: int = 400,
                  temperature: float = 0.4, json_mode: bool = True, max_concurrency: int = 1,
-                 timeout_s: float = 110.0):
+                 timeout_s: float = 110.0, thinking_off: str | None = None):
         from openai import AsyncOpenAI
-        self.client = AsyncOpenAI(api_key="not-needed", base_url=base_url, timeout=timeout_s, max_retries=1)
+
+        from populace.config import THINKING_OFF
+        from populace.providers.openai_compat import api_key
+        self.client = AsyncOpenAI(api_key=api_key(), base_url=base_url, timeout=timeout_s, max_retries=1)
+        if thinking_off is None:
+            self.extra_body: dict[str, Any] = {"chat_template_kwargs": {"enable_thinking": False}}
+            self.no_think = False
+        else:
+            how = THINKING_OFF[thinking_off]
+            self.extra_body = dict(how.get("extra_body") or {})
+            self.no_think = bool(how.get("no_think"))
         self.model = model
         self.max_tokens = max_tokens
         self.temperature = temperature
@@ -126,7 +141,10 @@ class OpenAIChat:
         self._gate = asyncio.Semaphore(max_concurrency)
 
     async def __call__(self, system: str, user: str, facts: dict[str, Any]) -> ChatResult:
-        extra: dict[str, Any] = {"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
+        from populace.providers.openai_compat import redact
+        extra: dict[str, Any] = {"extra_body": self.extra_body} if self.extra_body else {}
+        if self.no_think:
+            user = user.rstrip() + "\n\n/no_think"
         if self.json_mode:
             extra["response_format"] = {"type": "json_object"}
         async with self._gate:
@@ -136,11 +154,12 @@ class OpenAIChat:
                 messages=[{"role": "system", "content": system}, {"role": "user", "content": user}], **extra)
         usage = getattr(response, "usage", None)
         choice = response.choices[0] if response.choices else None
-        return ChatResult(text=(choice.message.content or "") if choice else "",
+        return ChatResult(text=redact((choice.message.content or "") if choice else ""),
                           latency_s=time.perf_counter() - started,
                           tokens_in=getattr(usage, "prompt_tokens", 0) or 0,
                           tokens_out=getattr(usage, "completion_tokens", 0) or 0,
-                          model=getattr(response, "model", self.model) or self.model)
+                          model=getattr(response, "model", self.model) or self.model,
+                          usage_reported=usage is not None)
 
 
 class MockChat:
@@ -352,7 +371,8 @@ class LlmHelpdesk:
             prompt = user if attempt == 1 else user + "\n\nYour last answer was not one JSON object. Reply with the JSON object only."
             result = await self.chat(system, prompt, facts)
             calls.append({"attempt": attempt, "latency_s": round(result.latency_s, 2),
-                          "tokens_in": result.tokens_in, "tokens_out": result.tokens_out, "model": result.model})
+                          "tokens_in": result.tokens_in, "tokens_out": result.tokens_out, "model": result.model,
+                          "usage_reported": result.usage_reported})
             data = extract_json(result.text)
             if isinstance(data, dict) and str(data.get("reply") or "").strip():
                 break
@@ -378,9 +398,10 @@ class LlmHelpdesk:
         return Reply(str(data["reply"]).strip(), end=bool(data.get("end")) or message.channel == "text")
 
 
-def make_agent(model_url: str | None = None, model: str | None = None, mock: bool = True, **_: Any) -> LlmHelpdesk:
+def make_agent(model_url: str | None = None, model: str | None = None, mock: bool = True,
+               thinking_off: str | None = None, **_: Any) -> LlmHelpdesk:
     """What `--agent SERVICE=examples/llm_helpdesk.py` calls: the stand-in in
-    mock, the run's own server when there is one."""
+    mock, the run's own server (and `--thinking-off`) when there is one."""
     if mock or not model_url:
         return LlmHelpdesk(MockChat())
-    return LlmHelpdesk(OpenAIChat(model_url, model=model or "populace"))
+    return LlmHelpdesk(OpenAIChat(model_url, model=model or "populace", thinking_off=thinking_off))

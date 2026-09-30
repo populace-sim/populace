@@ -30,11 +30,18 @@ def _runner(tmp_path, config=None, **kw):
 
 @pytest.fixture
 def echo_handler():
+    # Put back whatever was registered before (the mock brain, once any test
+    # has imported it), not nothing: later tests' mock towns need it.
+    before = M._HANDLERS.get("npc_decision")
+
     @M.handler("npc_decision")
     def _decide(rng, state, meta):
         return {"action": "wait", "roll": rng.random(), "where": state.get("where")}
     yield
-    M._HANDLERS.pop("npc_decision", None)
+    if before is None:
+        M._HANDLERS.pop("npc_decision", None)
+    else:
+        M._HANDLERS["npc_decision"] = before
 
 
 async def test_the_mock_is_deterministic_per_call_key(tmp_path, echo_handler):
@@ -126,7 +133,8 @@ def fake_server():
     server.shutdown()
 
 
-async def test_the_local_provider_speaks_the_openai_protocol(tmp_path, fake_server):
+async def test_the_local_provider_speaks_the_openai_protocol(tmp_path, fake_server, monkeypatch):
+    monkeypatch.delenv("POPULACE_API_KEY", raising=False)
     config = Config.build("laptop", {
         "providers": {"local": {"base_url": fake_server}},
         "roles": {"npc_decision": {"extra_body": {"lora": [{"id": 0, "scale": 1.0}]}}},

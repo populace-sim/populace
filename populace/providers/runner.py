@@ -16,6 +16,7 @@ from typing import Any
 
 from ..config import Config
 from ..observe.telemetry import Telemetry
+from .openai_compat import redact
 from .base import ModelResult, Provider
 from .costs import Meter
 from .mock import MockProvider
@@ -103,12 +104,13 @@ class ModelRunner:
                 "latency_ms": round(result.latency_ms, 1),
                 "queue_wait_ms": round(result.queue_wait_ms, 1),
                 **result.usage.to_dict(),
+                "usage_reported": result.usage_reported,
                 "system_hash": system_hash,
                 "system_tokens_est": len(system_text) // 4,
                 "prompt": messages,
-                "response": result.text,
+                "response": redact(result.text),
                 "request_id": result.request_id,
-                "error": result.error,
+                "error": redact(result.error) if result.error else None,
             }
         )
         # Last, so the failed call is on disk before the alarm stops the run.

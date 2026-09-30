@@ -183,6 +183,27 @@ class RoleConfig:
     # OpenAI-protocol servers only: fields the request body carries that the
     # protocol does not have, e.g. llama-server's per-request `lora` scale.
     extra_body: dict[str, Any] | None = None
+    # Qwen3's soft switch: "/no_think" appended to the last user message, for
+    # a hosted endpoint that offers no request field to turn thinking off.
+    no_think: bool = False
+
+
+# Turning a model's thinking off per request, for endpoints the user does not
+# start themselves (a local llama-server is started with thinking off). Each
+# host spells it differently; check the host's documentation.
+THINKING_OFF: dict[str, dict[str, Any]] = {
+    "openrouter": {"extra_body": {"reasoning": {"enabled": False}}},
+    "no-think": {"no_think": True},
+}
+
+
+def thinking_off_overrides(name: str | None) -> dict[str, Any]:
+    """Role overrides that turn thinking off in every role the model answers."""
+    if not name:
+        return {}
+    if name not in THINKING_OFF:
+        raise ConfigError(f"unknown --thinking-off {name!r}; choose from {', '.join(THINKING_OFF)}")
+    return {"roles": {role: dict(THINKING_OFF[name]) for role in ROLES}}
 
 
 class Config:
@@ -248,6 +269,7 @@ class Config:
             max_tokens=int(spec["max_tokens"]),
             timeout_s=spec.get("timeout_s"),
             extra_body=dict(spec["extra_body"]) if isinstance(spec.get("extra_body"), dict) else None,
+            no_think=bool(spec.get("no_think", False)),
         )
 
     def provider_settings(self, name: str) -> dict[str, Any]:

@@ -208,7 +208,7 @@ Python 3.11 or newer.
 ```bash
 git clone https://github.com/populace-sim/populace && cd populace
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
-.venv/bin/python -m pytest -q                 # 287 tests, no model needed
+.venv/bin/python -m pytest -q                 # 294 tests, no model needed
 .venv/bin/populace demo isp                   # the ISP demo in mock: 200 people, 4 days, under a minute
 ```
 
@@ -237,6 +237,27 @@ llama-server -m Qwen3-32B-Q4_K_M.gguf --host 127.0.0.1 --port 8080 -ngl 99 -fa o
   --chat-template-kwargs '{"enable_thinking":false}'
 .venv/bin/populace demo isp --model-url http://127.0.0.1:8080/v1 --concurrency 2 --profile compact
 ```
+
+**No GPU? Use a hosted API.** Any OpenAI-compatible endpoint works, for
+example OpenRouter serving Qwen3-32B. The key is read from `POPULACE_API_KEY`
+only and is never written to a config file, a log, a report or a run folder.
+Turn the model's thinking off per request: `--thinking-off openrouter` uses
+OpenRouter's reasoning setting, and `--thinking-off no-think` appends Qwen3's
+`/no_think` to each prompt for hosts with no such setting. Other hosts may name
+models and switches differently, so check their docs.
+
+```bash
+export POPULACE_API_KEY=your-key-here
+.venv/bin/populace demo isp --model-url https://openrouter.ai/api/v1 --model qwen/qwen3-32b \
+  --thinking-off openrouter --concurrency 8 --profile compact
+```
+
+Two cautions. **A hosted run costs money, and Populace has no built-in spending
+cap**: four days of the demo is roughly 800 model calls. Every run prints its
+model calls and tokens in and out at the end, and the report lists them, so you
+can see what it used. **A hosted Qwen3-32B may behave differently from the
+published 4090 runs** (a different quantisation, serving stack or chat
+template), so compare like with like.
 
 **Your own town:**
 

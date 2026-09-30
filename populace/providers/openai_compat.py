@@ -2,8 +2,10 @@
 
 Ported from Alive's `providers/openai.py`. It reaches `mlx_lm.server` on this
 machine (`populace serve`), llama-server on another machine over the LAN, or
-vLLM anywhere, by `base_url`. No API key is ever sent: every endpoint populace
-talks to is one the user runs.
+vLLM anywhere, by `base_url`, or a hosted API (OpenRouter, Together, ...). The
+API key comes only from the `POPULACE_API_KEY` environment variable; it is
+never read from or written to a config file, a log, a report or a run folder.
+Without it the client sends a placeholder, which a local server ignores.
 
 The prompt arrives as (system_blocks, messages); the blocks are joined into one
 system message in a fixed order, which is what lets the server's prefix cache
@@ -13,12 +15,36 @@ reuse the shared rules on every call.
 from __future__ import annotations
 
 import asyncio
+import os
 import time
 from typing import Any
 
 from ..config import Config, RoleConfig
 from .base import ModelResult, Provider
 from .costs import Usage
+
+API_KEY_ENV = "POPULACE_API_KEY"
+
+
+def api_key() -> str:
+    return os.environ.get(API_KEY_ENV) or "not-needed"
+
+
+def redact(text: str) -> str:
+    """A host's error can echo the key back ("invalid API key sk-..."); it is
+    cut out before anything is logged."""
+    key = os.environ.get(API_KEY_ENV)
+    return text.replace(key, f"[{API_KEY_ENV}]") if key and text else text
+
+
+def no_think(messages: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Qwen3's soft switch, on the last user message."""
+    out = [dict(m) for m in messages]
+    for m in reversed(out):
+        if m["role"] == "user":
+            m["content"] = m["content"].rstrip() + "\n\n/no_think"
+            break
+    return out
 
 
 def build_messages(
@@ -53,7 +79,7 @@ class OpenAICompatProvider(Provider):
             raise RuntimeError(f"providers.{settings_key}.base_url is not set")
         self.base_url = str(base_url)
         self.client = AsyncOpenAI(
-            api_key="not-needed",
+            api_key=api_key(),
             base_url=self.base_url,
             timeout=float(config.engine["request_timeout_s"]),
             max_retries=2,
@@ -78,10 +104,11 @@ class OpenAICompatProvider(Provider):
         started = time.perf_counter()
         try:
             extra = {"extra_body": role.extra_body} if role.extra_body else {}
+            chat = build_messages(system_blocks, messages)
             response = await self.client.chat.completions.create(
                 model=role.model,
                 max_tokens=role.max_tokens,
-                messages=build_messages(system_blocks, messages),
+                messages=no_think(chat) if role.no_think else chat,
                 **extra,
             )
         except Exception as exc:
@@ -89,7 +116,7 @@ class OpenAICompatProvider(Provider):
                 text="",
                 latency_ms=(time.perf_counter() - started) * 1000,
                 model=role.model,
-                error=f"{type(exc).__name__}: {exc}",
+                error=redact(f"{type(exc).__name__}: {exc}"),
             )
         choice = response.choices[0] if response.choices else None
         usage = getattr(response, "usage", None)
@@ -97,7 +124,7 @@ class OpenAICompatProvider(Provider):
         cached = getattr(details, "cached_tokens", 0) or 0
         prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0
         return ModelResult(
-            text=(choice.message.content or "") if choice else "",
+            text=redact((choice.message.content or "") if choice else ""),
             usage=Usage(
                 input_tokens=max(0, prompt_tokens - cached),
                 output_tokens=getattr(usage, "completion_tokens", 0) or 0,
@@ -106,6 +133,7 @@ class OpenAICompatProvider(Provider):
             latency_ms=(time.perf_counter() - started) * 1000,
             model=getattr(response, "model", role.model) or role.model,
             request_id=getattr(response, "id", None),
+            usage_reported=usage is not None,
         )
 
     async def aclose(self) -> None:

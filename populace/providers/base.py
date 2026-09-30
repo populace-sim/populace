@@ -22,6 +22,9 @@ class ModelResult:
     model: str = ""
     request_id: str | None = None
     error: str | None = None
+    # True when the server's reply carried a usage field; the mock's counts
+    # are estimates, and some servers send none.
+    usage_reported: bool = False
 
     @property
     def ok(self) -> bool:
